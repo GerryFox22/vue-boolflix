@@ -1,18 +1,24 @@
-<template> 
-    <div class="results-container d-flex p-4">
-        <div v-for="(film,index) in dataFilms" :key="index" class="col">
-            <CardResult :film="film"/>
-        </div>
-    </div> 
+<template>
+    <div class="container-results">
+        <div class="results-container d-flex p-4 flex-wrap row-cols-4">
+            <div v-for="film in dataFilms" :key="film.id" class="single-result col">
+                <CardResult :film="film"/>
+            </div>
+            <div v-for="film in dataTeleFilms" :key="film.id" class="single-result col">
+                <CardResult :film="film"/>
+            </div>
+        </div>  
+    </div>
+        
 </template>
 
 <script>
 import CardResult from "../components/CardResult.vue"
-import axios from "axios";
+// import axios from "axios";
 
 export default {
     name :"Results",
-    props :["testoRicercato"],
+    props :["dataFilms", "dataTeleFilms"],
     
     components : {
         CardResult,
@@ -20,18 +26,17 @@ export default {
 
     data : function (){
         return {
-            dataFilms : [],
+
         }
+    },
+
+    methods :{
+       
     },
 
 
     mounted () {
-      axios.get('https://api.themoviedb.org/3/search/movie?api_key=101cc2fb5e4661f4747b2caae74d2081&query="testoRicercato"')
-        .then((response) => {
-
-        this.dataFilms = response.data.results
-        console.log(this.dataFilms);
-    })
+      
   },
   
 }
@@ -41,5 +46,10 @@ export default {
 .results-container {
     background-color: gray;
 
+}
+
+.single-result {
+    background-color: orange;
+    border: 5px solid gray;
 }
 </style>
