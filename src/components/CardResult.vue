@@ -20,16 +20,15 @@
                 <img v-else-if="(film.original_language === 'us')" :src="flags.usa" alt="Usa flag">
                 <span v-else> {{film.original_language}}</span>
            </p>
-          <p class="voto d-flex "><strong>Voto</strong> : 
-            {{Math.round(film.vote_average / 2)}}
-            <ul >
-                <li><i class="fas fa-star"></i></li>
-                <li><i class="fas fa-star"></i></li>
-                <li><i class="fas fa-star"></i></li>
-                <li><i class="fas fa-star"></i></li>
-                <li><i class="fas fa-star"></i></li>
-            </ul>
-          </p>
+          <div class="voto d-flex ">
+                <p><strong>Voto</strong> :</p>
+                <div v-for="n in mediaVoto(film.vote_average)" :key="n" class="vote-star">
+                    <i class="yellow fas fa-star"></i>
+                </div>
+                <div v-for="n in 5- mediaVoto(film.vote_average)" :key="n" class="vote-star">
+                    <i class="fas fa-star"></i>
+                </div>
+            </div> 
 
             <p><strong>Overview</strong> : 
                 <span v-if="film.original_title">{{film.overview}}</span>
@@ -54,10 +53,12 @@ export default {
             mediaVoti : 0,
         }
     },
-
-  computed : {
-     
-  },
+    methods :{
+        mediaVoto (voto){
+            return Math.ceil(voto / 2)
+        }
+    },
+ 
 }
 </script>
 
